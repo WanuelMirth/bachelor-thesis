@@ -1,29 +1,29 @@
-# Kompensation des Overestimation Bias: Ein Vergleich von DQN und DDQN
+# Compensation of Overestimation Bias: A Comparison of DQN and DDQN
 
-Dieses Repository enthält den vollständigen Quellcode und die experimentellen Daten für die Bachelor-Thesis "Kompensation des Overestimation Bias im Reinforcement Learning: Ein Vergleich von DQN und DDQN in einer Rennspielumgebung".
+This repository contains the complete source code and experimental data for the bachelor thesis "Compensation of Overestimation Bias in Reinforcement Learning: A Comparison of DQN and DDQN in a Racing game Environment".
 
-Das Projekt untersucht, ob der durch Double Deep Q-Networks (DDQN) eingeführte Mechanismus zur Reduzierung der Q-Wert-Überschätzung auch in einer merkmalsbasierten, deterministischen Rennspielumgebung zu einer messbar überlegenen Performanz im Vergleich zum Standard-Deep-Q-Network (DQN) führt.
+The project investigates whether the mechanism introduced by Double Deep Q-Networks (DDQN) for reducing Q-value overestimation leads to measurably superior performance compared to the standard Deep Q-Network (DQN) in a feature-based, deterministic racing game environment.
 
-## Kurze Erklärung
+## Brief Explanation
 
-Das Projekt besteht aus zwei Hauptteilen:
-1.  **Einer benutzerdefinierten 2D-Rennspielumgebung**, die mit Pygame entwickelt wurde. Die Umgebung liefert dem Agenten einen 18-dimensionalen Zustandsvektor, bestehend aus 16 Distanzsensoren sowie der linearen und der Winkelgeschwindigkeit des Fahrzeugs.
-2.  **Einer Implementierung der DQN- und DDQN-Algorithmen** unter Verwendung von TensorFlow und Keras. Beide Agenten nutzen exakt dieselbe Netzwerkarchitektur und Hyperparameter, um einen fairen und kontrollierten Vergleich zu ermöglichen.
+The project consists of two main parts:
+1.  **A custom 2D racing game environment** developed with Pygame. The environment provides the agent with an 18-dimensional state vector, consisting of 16 distance sensors as well as the linear and angular velocity of the vehicle.
+2.  **An implementation of the DQN and DDQN algorithms** using TensorFlow and Keras. Both agents use exactly the same network architecture and hyperparameters to enable a fair and controlled comparison.
 
-Alle Experimente, Konfigurationen und Ergebnisse werden automatisch im `experiments/`-Verzeichnis gespeichert.
+All experiments, configurations, and results are automatically saved in the `experiments/` directory.
 
-## Installationsanleitung
+## Installation Instructions
 
-Das Projekt wurde mit Python 3.x entwickelt. Um die notwendigen Pakete zu installieren, wird die Verwendung einer virtuellen Umgebung (z.B. mit `venv`) empfohlen.
+The project was developed with Python 3.x. To install the necessary packages, using a virtual environment (e.g. with `venv`) is recommended.
 
-### 1. Klonen des Repositories:
+### 1. Cloning the Repository:
 
 ```bash
-git clone https://github.com/Zickswag/bachelor-thesis.git
+git clone https://github.com/WanuelMirth/bachelor-thesis.git
 cd bachelor-thesis
-````
+```
 
-### 2. Erstellen und Aktivieren einer virtuellen Umgebung (optional, aber empfohlen):
+### 2. Creating and Activating a Virtual Environment (optional, but recommended):
 
 #### Windows:
 
@@ -39,7 +39,7 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 3. Installation der Abhängigkeiten:
+### 3. Installation of Dependencies:
 
 ```bash
 pip install tensorflow
@@ -47,33 +47,33 @@ pip install pygame
 pip install numpy
 ```
 
-## Training der Agenten
+## Training the Agents
 
-Das Training wird über das Hauptskript `main.py` gesteuert.
+The training is controlled via the main script `main.py`.
 
-### Einfacher Start
+### Easy Start
 
-Um ein Training mit den Standardparametern zu starten, führen Sie folgenden Befehl aus:
+To start a training run with default parameters, execute the following command:
 
 ```bash
 python main.py
 ```
 
-Standardmäßig wird der DQN-Agent trainiert. Um den DDQN-Agenten zu trainieren:
+By default, the DQN agent is trained. To train the DDQN agent:
 
 ```bash
 python main.py --agent ddqn
 ```
 
-Die Ergebnisse, Logs und Modell-Checkpoints werden automatisch in einem neuen Ordner unter `experiments/[agent-name]/[timestamp]/` gespeichert.
+Results, logs, and model checkpoints are automatically saved in a new folder under `experiments/[agent-name]/[timestamp]/`.
 
-### Reproduktion der Thesis-Ergebnisse
+### Reproduction of Thesis Results
 
-Für die in der Arbeit präsentierten Ergebnisse wurde ein fester Satz von 5 Seeds verwendet, um die statistische Robustheit zu gewährleisten. Die verwendeten Seeds sind:
+For the results presented in the thesis, a fixed set of 5 seeds was used to ensure statistical robustness. The seeds used are:
 
 `[0, 1, 2, 3, 4]`
 
-Um einen spezifischen Lauf zu reproduzieren (z.B. DQN mit Seed 3), setzen Sie die Umgebungsvariable `PYTHONHASHSEED` vor dem Start:
+To reproduce a specific run (e.g. DQN with Seed 3), set the `PYTHONHASHSEED` environment variable before starting:
 
 #### macOS / Linux:
 
@@ -87,52 +87,51 @@ PYTHONHASHSEED=3 python main.py --agent dqn
 $env:PYTHONHASHSEED=3; python main.py --agent dqn
 ```
 
-## Monitoring und Evaluation
+## Monitoring and Evaluation
 
-Die Ergebnisse jedes Trainingslaufs werden auf zwei Arten protokolliert, um eine Analyse zu ermöglichen:
+The results of each training run are logged in two ways to enable analysis:
 
-### 1. Live-Monitoring mit TensorBoard
+### 1. Live Monitoring with TensorBoard
 
-Alle wichtigen Metriken werden in Echtzeit in TensorBoard-Logs geschrieben. Um den Trainingsfortschritt live zu überwachen oder nach Abschluss zu analysieren, starten Sie TensorBoard und verweisen auf das `experiments`-Verzeichnis:
+All important metrics are written to TensorBoard logs in real-time. To monitor training progress live or analyze it after completion, start TensorBoard and point it to the `experiments` directory:
 
 ```bash
 tensorboard --logdir experiments
 ```
-Öffnen Sie anschließend die in der Konsole angezeigte URL (üblicherweise `http://localhost:6006`) in Ihrem Browser. Dort können Sie die Lernkurven für verschiedene Läufe vergleichen.
+Then open the URL displayed in the console (usually `http://localhost:6006`) in your browser. There you can compare the learning curves for different runs.
 
-### 2. Rohdaten als CSV
+### 2. Raw Data as CSV
 
-Für eine detaillierte statistische Analyse werden alle Metriken zusätzlich in einer `metrics.csv`-Datei innerhalb des jeweiligen Run-Verzeichnisses gespeichert. Diese Dateien bilden die Grundlage für die in der Thesis erstellten aggregierten Graphen und weiterführenden Analysen.
+For a detailed statistical analysis, all metrics are additionally saved in a `metrics.csv` file within the respective run directory. These files form the basis for the aggregated graphs and further analyses created in the thesis.
 
-### 3. Ergebnisse
-Die folgenden Abbildungen zeigen die aggregierten Resultate aus den Experimenten:
+### 3. Results
+The following figures show the aggregated results from the experiments:
 
-**Trainingsverlauf über alle Seeds** 
-![Trainingsverlauf](results/score_comparison.png)
+**Training progress over all seeds** 
+![Training progress](results/score_comparison.png)
 
-**Vergleich der geschätzten Q-Werte** 
-![Q Werte](results/qvalue_comparison.png)
+**Comparison of estimated Q-values** 
+![Q values](results/qvalue_comparison.png)
 
 ---
 
-## Optionale Parameter
+## Optional Parameters
 
-Das Skript `main.py` akzeptiert folgende Kommandozeilenargumente zur Steuerung der Hyperparameter:
+The script `main.py` accepts the following command-line arguments to control hyperparameters:
 
-| Argument                 | Standardwert | Erklärung                                                          |
+| Argument                 | Default Value | Explanation                                                          |
 | ------------------------ | ------------ | ------------------------------------------------------------------ |
-| `--agent`                | "dqn"        | Wählt den Agenten-Typ aus (`dqn` oder `ddqn`).                     |
-| `--layers`               | 18 18 18     | Anzahl der Neuronen in den versteckten Schichten.                  |
-| `--lr`                   | 0.0001       | Lernrate ($\alpha$) für den Adam-Optimizer.                        |
-| `--gamma`                | 0.99         | Diskontfaktor ($\gamma$) für zukünftige Belohnungen.               |
-| `--batch_size`           | 512          | Anzahl der Transitionen pro Trainings-Batch.                       |
-| `--mem_size`             | 250000       | Maximale Anzahl an Transitionen im Replay Buffer.                  |
-| `--exploration_steps`    | 12500        | Anzahl der zufälligen Schritte zu Beginn zum Füllen des Buffers.   |
-| `--replace_target_steps` | 10000        | Häufigkeit, mit der das Target-Netzwerk aktualisiert wird.         |
-| `--save_interval`        | 100          | Speichert das Modell alle X Episoden.                              |
-| `--epsilon_start`        | 1.0          | Startwert für die $\epsilon$-greedy Strategie.                     |
-| `--epsilon_end`          | 0.1          | Minimaler Wert für $\epsilon$.                                     |
-| `--epsilon_decay_steps`  | 250000       | Anzahl der Schritte zur linearen Epsilon-Reduktion.                |
-| `--render_freq`          | 0            | Renderfrequenz der Umgebung. `0` bedeutet kein Rendern.            |
-| `--max_steps`            | 50000000     | Gesamtanzahl der Trainingsschritte.                                |
-
+| `--agent`                | "dqn"        | Selects the agent type (`dqn` or `ddqn`).                     |
+| `--layers`               | 18 18 18     | Number of neurons in the hidden layers.                  |
+| `--lr`                   | 0.0001       | Learning rate ($\alpha$) for the Adam optimizer.                        |
+| `--gamma`                | 0.99         | Discount factor ($\gamma$) for future rewards.               |
+| `--batch_size`           | 512          | Number of transitions per training batch.                       |
+| `--mem_size`             | 250000       | Maximum number of transitions in the replay buffer.                  |
+| `--exploration_steps`    | 12500        | Number of random steps at the beginning to fill the buffer.   |
+| `--replace_target_steps` | 10000        | Frequency at which the target network is updated.         |
+| `--save_interval`        | 100          | Saves the model every X episodes.                              |
+| `--epsilon_start`        | 1.0          | Starting value for the $\epsilon$-greedy strategy.                     |
+| `--epsilon_end`          | 0.1          | Minimum value for $\epsilon$.                                     |
+| `--epsilon_decay_steps`  | 250000       | Number of steps for linear epsilon reduction.                |
+| `--render_freq`          | 0            | Rendering frequency of the environment. `0` means no rendering.            |
+| `--max_steps`            | 50000000     | Total number of training steps.                                |
